@@ -1,0 +1,33 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.4.RELEASE")
+    }
+}
+
+group 'io.github.kyungw00k'
+version '1.0-SNAPSHOT'
+
+
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'groovy'
+
+repositories {
+    mavenCentral()
+    maven { url "https://repository.jboss.org/nexus/content/kyungw00k.hideyourass.repositories/releases" }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.codehaus.groovy:groovy-all")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    runtime("org.hsqldb:hsqldb")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+    testCompile 'org.spockframework:spock-spring:0.7-groovy-2.0'
+}
