@@ -27,22 +27,22 @@ class Proxy {
     Integer port
 
     /** Country code */
-    @Column
+    @Column(nullable = true)
     String countryCode
 
     /** Region */
-    @Column
+    @Column(nullable = true)
     String region
 
     /** City */
-    @Column
+    @Column(nullable = true)
     String city
 
     /** Type */
-    @Column
+    @Column(nullable = false)
     String type
 
     /** True if the proxy was working when last tested */
-    @Column
+    @Column(nullable = true)
     boolean alive
 }

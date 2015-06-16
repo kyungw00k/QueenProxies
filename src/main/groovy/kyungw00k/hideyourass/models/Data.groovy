@@ -9,7 +9,7 @@ import groovy.transform.PackageScope
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class Data {
     /** Proxies matching requested filter conditions */
-    def proxies;
+    def proxies = [];
 
     /** Parameters that are common to all proxies */
     def filters = [:]
