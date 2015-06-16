@@ -17,7 +17,7 @@ class ProxyController {
     Response queries(
             @RequestParam(required = false) String authKey,
             @RequestParam(required = false) String type,
-            @RequestParam(required = false, defaultValue = "true") Boolean alive,
+            @RequestParam(required = false, defaultValue = "true") boolean alive,
             @RequestParam(required = false) String country_code
     ) {
 
@@ -36,10 +36,10 @@ class ProxyController {
         }
 
         if (response.data.filters.type || response.data.filters.alive || response.data.filters.country_code) {
-            response.data.proxies = proxyRepository.findByTypeAndProtocolsAndCountryCodeAndAliveAllIgnoringCase(
-                    response.data.filters.type,
-                    response.data.filters.protocols,
-                    response.data.filters.country_code
+            response.data.proxies = proxyRepository.findByTypeOrCountryCodeOrAlive(
+                    (String) response.data.filters.type,
+                    (String) response.data.filters.country_code,
+                    (boolean) response.data.filters.alive
             )
         } else {
             response.data.proxies = proxyRepository.findAll()
@@ -51,14 +51,16 @@ class ProxyController {
     @RequestMapping(value = "/proxies", method = RequestMethod.POST)
     @ResponseBody
     Response save(
-            @RequestParam(required = false) String authKey,
-            @RequestParam(required = true) Proxy proxy
+            @RequestHeader(required = false) String authKey,
+            @RequestBody(required = true) Proxy proxy
     ) {
 
         def response = new Response()
 
-        response.data.proxies << proxyRepository.save(proxy)
-        response.message 'saved'
+        proxy = proxyRepository.save(proxy)
+
+        response.data.proxies = [proxy];
+        response.message = 'saved'
 
         return response
     }
