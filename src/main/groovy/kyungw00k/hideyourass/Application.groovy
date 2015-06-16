@@ -8,12 +8,8 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
-/**
- * Created by humphrey on 15. 6. 15..
- */
-
 @SpringBootApplication
-@ComponentScan
+@ComponentScan(basePackages = 'kyungw00k.hideyourass')
 @EnableAutoConfiguration
 @EnableTransactionManagement
 @EnableJpaRepositories
