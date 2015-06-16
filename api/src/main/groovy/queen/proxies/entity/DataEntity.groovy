@@ -1,13 +1,12 @@
-package kyungw00k.hideyourass.models
+package queen.proxies.entity
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import groovy.transform.PackageScope
 
 /**
- * kyungw00k.hideyourass.models.Data Object
+ * DataEntity Object
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-class Data {
+class DataEntity {
     /** Proxies matching requested filter conditions */
     def proxies = [];
 

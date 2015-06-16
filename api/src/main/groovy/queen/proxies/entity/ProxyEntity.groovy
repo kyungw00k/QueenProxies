@@ -1,4 +1,4 @@
-package kyungw00k.hideyourass.models
+package queen.proxies.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -7,17 +7,11 @@ import groovy.transform.PackageScope
 import javax.persistence.*
 
 /**
- * kyungw00k.hideyourass.models.Proxy Object
+ * ProxyEntity Object
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-class Proxy {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @PackageScope
-    @JsonIgnore
-    long id;
-
+class ProxyEntity extends AuditableEntity{
     /**  IP address */
     @Column(unique = true, nullable = false)
     String ip
@@ -43,6 +37,24 @@ class Proxy {
     String type
 
     /** True if the proxy was working when last tested */
-    @Column(nullable = true)
-    boolean alive
+    @Column(nullable = false)
+    boolean alive = false
+//
+//    @Column(updatable = false)
+//    Date createdDate
+//
+//    @Column(insertable = false)
+//    Date lastModifiedDate
+//
+//
+//    @PrePersist
+//    public void prePersist(){
+//        setCreatedDate(new Date());
+//    }
+//
+//    @PreUpdate
+//    public void preUpdate(){
+//        setLastModifiedDate(new Date());
+//    }
+
 }

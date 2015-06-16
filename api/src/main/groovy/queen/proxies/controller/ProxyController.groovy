@@ -1,10 +1,10 @@
-package kyungw00k.hideyourass.controllers
+package queen.proxies.controller
 
-import kyungw00k.hideyourass.models.Proxy
-import kyungw00k.hideyourass.models.Response
-import kyungw00k.hideyourass.repositories.ProxyRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import queen.proxies.entity.ProxyEntity
+import queen.proxies.entity.ResponseEntity
+import queen.proxies.repository.ProxyRepository
 
 @RestController
 class ProxyController {
@@ -14,14 +14,14 @@ class ProxyController {
 
     @RequestMapping(value = "/proxies", method = RequestMethod.GET)
     @ResponseBody
-    Response queries(
+    ResponseEntity queries(
             @RequestParam(required = false) String authKey,
             @RequestParam(required = false) String type,
             @RequestParam(required = false, defaultValue = "true") boolean alive,
             @RequestParam(required = false) String country_code
     ) {
 
-        def response = new Response()
+        def response = ResponseEntity.newInstance()
 
         if (type) {
             response.data.filters.type = type
@@ -50,12 +50,12 @@ class ProxyController {
 
     @RequestMapping(value = "/proxies", method = RequestMethod.POST)
     @ResponseBody
-    Response save(
+    ResponseEntity save(
             @RequestHeader(required = false) String authKey,
-            @RequestBody(required = true) Proxy proxy
+            @RequestBody(required = true) ProxyEntity proxy
     ) {
 
-        def response = new Response()
+        def response = ResponseEntity.newInstance()
 
         proxy = proxyRepository.save(proxy)
 

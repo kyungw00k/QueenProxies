@@ -1,15 +1,14 @@
-package kyungw00k.hideyourass.models
+package queen.proxies.entity
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import groovy.transform.PackageScope
 
 /**
  * Created by humphrey on 15. 6. 15..
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-class Response {
+class ResponseEntity {
     /** Requested data */
-    def data = new Data()
+    def data = new DataEntity()
 
     /** Unique 36-character string, identifying the request */
     String requestId = UUID.randomUUID().toString()

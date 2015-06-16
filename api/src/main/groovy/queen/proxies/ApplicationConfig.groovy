@@ -1,11 +1,8 @@
-package kyungw00k.hideyourass
+package queen.proxies
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType
 import org.springframework.orm.jpa.JpaTransactionManager
@@ -13,24 +10,18 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
 import org.springframework.orm.jpa.vendor.Database
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
 import org.springframework.transaction.PlatformTransactionManager
-import org.springframework.transaction.annotation.EnableTransactionManagement
 
 import javax.sql.DataSource
 
-@SpringBootApplication
-@ComponentScan
-@EnableAutoConfiguration
-@EnableTransactionManagement
-@EnableJpaRepositories
 @Configuration
-class ApplicationTest {
+@EnableAutoConfiguration
+class ApplicationConfig {
+
     /**
      * Bootstraps an in-memory HSQL database.
      *
      * @return
-     * @see http
-     *      ://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/jdbc.html#jdbc-embedded-database
-     *      -support
+     * @see <a href="http://static.springsource.org/spring/docs/3.1.x/spring-framework-reference/html/jdbc.html#jdbc-embedded-database-support}">the link</a>
      */
     @Bean
     public DataSource dataSource() {
@@ -39,7 +30,7 @@ class ApplicationTest {
     }
 
     /**
-     * Sets up a {@link org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean} to use Hibernate. Activates picking up entities from the
+     * Sets up a {@link LocalContainerEntityManagerFactoryBean} to use Hibernate. Activates picking up entities from the
      * project's base package.
      *
      * @return

@@ -1,9 +1,9 @@
-package kyungw00k.hideyourass.controllers
+package queen.proxies.controller
 
-import groovy.json.JsonSlurper
-import kyungw00k.hideyourass.ApplicationTest
-import kyungw00k.hideyourass.models.Response
-import kyungw00k.hideyourass.repositories.ProxyRepository
+import queen.proxies.ApplicationTest
+import queen.proxies.entity.ProxyEntity
+import queen.proxies.entity.ResponseEntity
+import queen.proxies.repository.ProxyRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.IntegrationTest
@@ -28,28 +28,25 @@ class ProxyControllerSpec extends Specification {
     @Value('${local.server.port}')
     int port;
 
-    def jsonSlurper = new JsonSlurper()
     def restTemplate = new TestRestTemplate();
 
 
     def "GET /proxies"() {
         given:
-        def response = restTemplate.getForEntity("http://localhost:" + port + "/proxies", String.class);
-        def jsonObject = jsonSlurper.parseText response.body
+        def response = restTemplate.getForObject("http://localhost:" + port + "/proxies", ResponseEntity.class);
 
         expect:
-        assert response.hasBody()
-        assert jsonObject != null
-        assert jsonObject.requestId.length() == '3090cfed-9b33-46f7-9f1c-55317088d397'.length()
-        assert jsonObject.data != null
-        assert jsonObject.data.filters != null
-        assert jsonObject.data.filters.alive != null
-        assert jsonObject.data.proxies != null
+        assert response != null
+        assert response.requestId.length() == '3090cfed-9b33-46f7-9f1c-55317088d397'.length()
+        assert response.data != null
+        assert response.data.filters != null
+        assert response.data.filters.alive != null
+        assert response.data.proxies != null
     }
 
     def "POST /proxies"() {
         setup:
-        def proxyItem = new kyungw00k.hideyourass.models.Proxy()
+        def proxyItem = new ProxyEntity()
         proxyItem.ip = '127.0.0.1'
         proxyItem.port = 8888
         proxyItem.alive = true
@@ -57,7 +54,7 @@ class ProxyControllerSpec extends Specification {
         proxyItem.countryCode = 'KR'
 
         when:
-        def response = restTemplate.postForObject("http://localhost:" + port + "/proxies", proxyItem, Response.class)
+        def response = restTemplate.postForObject("http://localhost:" + port + "/proxies", proxyItem, ResponseEntity.class)
 
         then:
         assert response.requestId.length() == '3090cfed-9b33-46f7-9f1c-55317088d397'.length()

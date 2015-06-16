@@ -1,0 +1,13 @@
+server.port: 9000
+debug:
+
+spring:
+  # DataSource
+  datasource:
+    url: jdbc:hsqldb:file:~/.webapp/testedb
+
+  # Hibernate
+  jpa:
+    show-sql: false
+  hibernate:
+    ddl-auto: create

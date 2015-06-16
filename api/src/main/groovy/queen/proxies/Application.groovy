@@ -1,4 +1,4 @@
-package kyungw00k.hideyourass
+package queen.proxies
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @SpringBootApplication
-@ComponentScan(basePackages = 'kyungw00k.hideyourass')
+@ComponentScan
 @EnableAutoConfiguration
 @EnableTransactionManagement
 @EnableJpaRepositories
