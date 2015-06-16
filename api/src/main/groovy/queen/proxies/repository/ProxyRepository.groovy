@@ -2,17 +2,22 @@ package queen.proxies.repository
 
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
+import queen.proxies.constraint.Anonymity
+import queen.proxies.constraint.Protocol
 import queen.proxies.entity.ProxyEntity
 
 @Repository
 public interface ProxyRepository extends CrudRepository<ProxyEntity, Long> {
-    List<ProxyEntity> findByType(String type)
+    ProxyEntity findByIpAndPort(String ip, int port)
+    List<ProxyEntity> findByType(Anonymity type)
     List<ProxyEntity> findByCountryCode(String countryCode)
     List<ProxyEntity> findByAlive(boolean alive)
 
-    List<ProxyEntity> findByTypeAndCountryCode(String type, String countryCode)
-    List<ProxyEntity> findByTypeAndAlive(String type, boolean alive)
+    List<ProxyEntity> findByProtocol(Protocol protocol)
+
+    List<ProxyEntity> findByTypeAndCountryCode(Anonymity type, String countryCode)
+    List<ProxyEntity> findByTypeAndAlive(Anonymity type, boolean alive)
     List<ProxyEntity> findByCountryCodeAndAlive(String countryCode, boolean alive)
 
-    List<ProxyEntity> findByTypeOrCountryCodeOrAlive(String type, String countryCode, boolean alive)
+    List<ProxyEntity> findByTypeOrCountryCodeOrAlive(Anonymity type, String countryCode, boolean alive)
 }

@@ -1,8 +1,8 @@
 package queen.proxies.entity
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonInclude
-import groovy.transform.PackageScope
+import queen.proxies.constraint.Protocol
+import queen.proxies.constraint.Anonymity
 
 import javax.persistence.*
 
@@ -11,9 +11,10 @@ import javax.persistence.*
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
+@Table(uniqueConstraints=[@UniqueConstraint(columnNames = ["ip" , "port"])])
 class ProxyEntity extends AuditableEntity{
     /**  IP address */
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     String ip
 
     /** Port */
@@ -32,9 +33,12 @@ class ProxyEntity extends AuditableEntity{
     @Column(nullable = true)
     String city
 
-    /** Type */
+    /** Anonymity */
     @Column(nullable = false)
-    String type
+    Anonymity type
+
+    @Column(nullable = false)
+    Protocol protocol
 
     /** True if the proxy was working when last tested */
     @Column(nullable = false)

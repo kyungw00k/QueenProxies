@@ -2,6 +2,7 @@ package queen.proxies.controller
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import queen.proxies.constraint.Anonymity
 import queen.proxies.entity.ProxyEntity
 import queen.proxies.entity.ResponseEntity
 import queen.proxies.repository.ProxyRepository
@@ -16,9 +17,9 @@ class ProxyController {
     @ResponseBody
     ResponseEntity queries(
             @RequestParam(required = false) String authKey,
-            @RequestParam(required = false) String type,
+            @RequestParam(required = false) Anonymity type,
             @RequestParam(required = false, defaultValue = "true") boolean alive,
-            @RequestParam(required = false) String country_code
+            @RequestParam(required = false) String countryCode
     ) {
 
         def response = ResponseEntity.newInstance()
@@ -32,14 +33,14 @@ class ProxyController {
         }
 
         if (country_code) {
-            response.data.filters.country_code = country_code
+            response.data.filters.countryCode = countryCode
         }
 
-        if (response.data.filters.type || response.data.filters.alive || response.data.filters.country_code) {
+        if (response.data.filters.type || response.data.filters.alive || response.data.filters.countryCode) {
             response.data.proxies = proxyRepository.findByTypeOrCountryCodeOrAlive(
-                    (String) response.data.filters.type,
-                    (String) response.data.filters.country_code,
-                    (boolean) response.data.filters.alive
+                    (Anonymity)response.data.filters.type,
+                    (String)response.data.filters.countryCode,
+                    (boolean)response.data.filters.alive
             )
         } else {
             response.data.proxies = proxyRepository.findAll()
