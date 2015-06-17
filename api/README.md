@@ -6,7 +6,7 @@ In brief, try to implement as same as [King Proxies API Documentation](https://k
 Get a list of proxies
 
 |Method|Route|Response|
-|------|--|--|
+|------|-----|--------|
 |GET|`/proxies`|JSON|
 
 
