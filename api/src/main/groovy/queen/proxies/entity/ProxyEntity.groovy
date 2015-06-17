@@ -37,8 +37,11 @@ class ProxyEntity extends AuditableEntity{
     @Column(nullable = false)
     Anonymity type
 
-    @Column(nullable = false)
-    Protocol protocol
+    @ElementCollection(targetClass=Protocol.class, fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name="proxy_protocol")
+    @Column(name="protocol")
+    List<Protocol> protocols
 
     /** True if the proxy was working when last tested */
     @Column(nullable = false)

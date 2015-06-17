@@ -13,7 +13,7 @@ public interface ProxyRepository extends CrudRepository<ProxyEntity, Long> {
     List<ProxyEntity> findByCountryCode(String countryCode)
     List<ProxyEntity> findByAlive(boolean alive)
 
-    List<ProxyEntity> findByProtocol(Protocol protocol)
+    List<ProxyEntity> findByProtocols(List<Protocol> protocols)
 
     List<ProxyEntity> findByTypeAndCountryCode(Anonymity type, String countryCode)
     List<ProxyEntity> findByTypeAndAlive(Anonymity type, boolean alive)

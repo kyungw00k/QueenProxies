@@ -16,7 +16,7 @@ class ProxyController {
     @RequestMapping(value = "/proxies", method = RequestMethod.GET)
     @ResponseBody
     ResponseEntity queries(
-            @RequestParam(required = false) String authKey,
+            @RequestParam(required = false) String key,
             @RequestParam(required = false) Anonymity type,
             @RequestParam(required = false, defaultValue = "true") boolean alive,
             @RequestParam(required = false) String countryCode
@@ -32,7 +32,7 @@ class ProxyController {
             response.data.filters.alive = alive
         }
 
-        if (country_code) {
+        if (countryCode) {
             response.data.filters.countryCode = countryCode
         }
 
@@ -52,7 +52,7 @@ class ProxyController {
     @RequestMapping(value = "/proxies", method = RequestMethod.POST)
     @ResponseBody
     ResponseEntity save(
-            @RequestHeader(required = false) String authKey,
+            @RequestHeader(required = false) String key,
             @RequestBody(required = true) ProxyEntity proxy
     ) {
 

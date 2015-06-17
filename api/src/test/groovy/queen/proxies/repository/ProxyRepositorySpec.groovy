@@ -27,7 +27,7 @@ class ProxyRepositorySpec extends Specification {
         proxyItem.alive = true
         proxyItem.type = Anonymity.elite
         proxyItem.countryCode = 'KR'
-        proxyItem.protocol = Protocol.http
+        proxyItem.protocols = [Protocol.http]
 
         when:
         proxyRepository.save(proxyItem)
@@ -48,7 +48,8 @@ class ProxyRepositorySpec extends Specification {
         found.alive == true
         found.type == Anonymity.elite
         found.countryCode.equals('KR')
-        found.protocol == Protocol.http
+        println found.protocols
+        found.protocols[0] == Protocol.http
         found.createdDate
         found.createdDate == found.lastModifiedDate
         found.version == 0

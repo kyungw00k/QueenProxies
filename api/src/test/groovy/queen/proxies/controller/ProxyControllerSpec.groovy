@@ -53,7 +53,7 @@ class ProxyControllerSpec extends Specification {
         proxyItem.alive = true
         proxyItem.type = Anonymity.transparent
         proxyItem.countryCode = 'KR'
-        proxyItem.protocol = Protocol.http
+        proxyItem.protocols = [Protocol.http]
 
         when:
         def response = restTemplate.postForObject("http://localhost:" + port + "/proxies", proxyItem, ResponseEntity.class)
@@ -68,7 +68,7 @@ class ProxyControllerSpec extends Specification {
         assert response.data.proxies[0].port == proxyItem.port
         assert response.data.proxies[0].alive == proxyItem.alive
         assert response.data.proxies[0].type == proxyItem.type.toString()
-        assert response.data.proxies[0].protocol == proxyItem.protocol.toString()
+//        assert response.data.proxies[0].protocols == proxyItem.protocols.toString()
         assert response.data.proxies[0].countryCode.equals(proxyItem.countryCode)
     }
 }
