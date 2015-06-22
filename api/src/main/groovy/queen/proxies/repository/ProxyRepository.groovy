@@ -8,6 +8,8 @@ import queen.proxies.entity.ProxyEntity
 @Repository
 public interface ProxyRepository extends CrudRepository<ProxyEntity, Long> {
     ProxyEntity findByIpAndPort(String ip, int port)
+    List<ProxyEntity> findByAlive(boolean alive)
+    List<ProxyEntity> findByCountryCode(String countryCode)
+    List<ProxyEntity> findByAliveOrderByLastModifiedDateDesc(boolean alive)
     List<ProxyEntity> findByTypeOrCountryCodeOrAlive(Anonymity type, String countryCode, boolean alive)
-    List<ProxyEntity> findAllByLastModifiedDate(Anonymity type, String countryCode, boolean alive)
 }
