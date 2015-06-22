@@ -26,4 +26,17 @@ class ExternalApiSpec extends Specification {
             assert it.zip == '94105'
         })
     }
+
+    def "connect http://google.com through sample proxy"() {
+        expect:
+        ExternalApi
+                .pingUrlThroughProxyByIpPortAndProtocol(
+                'http://google.com',
+                '137.135.166.225',  // GET SOME FREE PROXY IP
+                8121,               // AND PORT
+                Proxy.Type.HTTP
+        ).subscribe({ result ->
+            assert result
+        })
+    }
 }
