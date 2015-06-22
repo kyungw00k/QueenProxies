@@ -29,7 +29,7 @@ class ProxyController {
             @RequestParam(required = false) String countryCode
     ) {
 
-        DeferredResult<ResponseEntity> deffered = new DeferredResult()
+        DeferredResult<ResponseEntity> deferredResult = new DeferredResult()
 
         def onNext = {
 
@@ -49,11 +49,11 @@ class ProxyController {
 
             response.data.proxies = it
 
-            deffered.setResult(response)
+            deferredResult.setResult(response)
         }
 
         def onError = { e ->
-            deffered.setErrorResult(e)
+            deferredResult.setErrorResult(e)
         }
 
 
@@ -61,7 +61,7 @@ class ProxyController {
                 .rxFindByTypeOrCountryCodeOrAlive(type, countryCode, alive)
                 .subscribe(onNext, onError)
 
-        return deffered
+        return deferredResult
     }
 
 
@@ -72,10 +72,10 @@ class ProxyController {
             @RequestBody(required = true) ProxyEntity proxyEntity
     ) {
 
-        DeferredResult<ResponseEntity> deffered = new DeferredResult()
+        DeferredResult<ResponseEntity> deferredResult = new DeferredResult()
 
         def onError = { e ->
-            deffered.setErrorResult(e)
+            deferredResult.setErrorResult(e)
         }
 
         def onNext = { item ->
@@ -94,7 +94,7 @@ class ProxyController {
                         response.data.proxies = [savedProxyEntity]
                         response.message = 'saved'
 
-                        deffered.setResult(response)
+                        deferredResult.setResult(response)
                     }, onError)
         }
 
@@ -102,7 +102,7 @@ class ProxyController {
                 .fetchGeolocationByIp(proxyEntity.ip)
                 .subscribe(onNext, onError, onCompleted)
 
-        return deffered
+        return deferredResult
     }
 
 }
