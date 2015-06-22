@@ -5,4 +5,8 @@ jdk:
 before_install:
   - chmod +x gradlew
 
-install: ./gradlew test
+install:
+  - ./gradlew check
+
+script:
+  - ./gradlew test

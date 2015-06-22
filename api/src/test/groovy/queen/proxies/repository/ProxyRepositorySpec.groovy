@@ -25,7 +25,7 @@ class ProxyRepositorySpec extends Specification {
         proxyItem.ip = '127.0.0.1'
         proxyItem.port = 8888
         proxyItem.alive = true
-        proxyItem.type = Anonymity.elite
+        proxyItem.type = Anonymity.anonymous
         proxyItem.countryCode = 'KR'
         proxyItem.protocols = [Protocol.http]
 
@@ -46,7 +46,7 @@ class ProxyRepositorySpec extends Specification {
         found.ip.equals('127.0.0.1')
         found.port.equals(8888)
         found.alive == true
-        found.type == Anonymity.elite
+        found.type == Anonymity.anonymous
         found.countryCode.equals('KR')
         println found.protocols
         found.protocols[0] == Protocol.http

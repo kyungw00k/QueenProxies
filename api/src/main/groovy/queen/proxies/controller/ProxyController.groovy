@@ -2,10 +2,13 @@ package queen.proxies.controller
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.context.request.async.DeferredResult
 import queen.proxies.constraint.Anonymity
 import queen.proxies.entity.ProxyEntity
 import queen.proxies.entity.ResponseEntity
 import queen.proxies.repository.ProxyRepository
+import queen.proxies.service.ProxyService
+import queen.proxies.util.ExternalApi
 
 @RestController
 class ProxyController {
@@ -13,56 +16,93 @@ class ProxyController {
     @Autowired
     ProxyRepository proxyRepository
 
+    @Autowired
+    ProxyService proxyService
+
+
     @RequestMapping(value = "/proxies", method = RequestMethod.GET)
     @ResponseBody
-    ResponseEntity queries(
+    DeferredResult<ResponseEntity> queries(
             @RequestParam(required = false) String key,
             @RequestParam(required = false) Anonymity type,
             @RequestParam(required = false, defaultValue = "true") boolean alive,
             @RequestParam(required = false) String countryCode
     ) {
 
-        def response = ResponseEntity.newInstance()
+        DeferredResult<ResponseEntity> deffered = new DeferredResult()
 
-        if (type) {
-            response.data.filters.type = type
+        def onNext = {
+
+            def response = ResponseEntity.newInstance()
+
+            if (type) {
+                response.data.filters.type = type
+            }
+
+            if (alive) {
+                response.data.filters.alive = alive
+            }
+
+            if (countryCode) {
+                response.data.filters.countryCode = countryCode
+            }
+
+            response.data.proxies = it
+
+            deffered.setResult(response)
         }
 
-        if (alive) {
-            response.data.filters.alive = alive
+        def onError = { e ->
+            deffered.setErrorResult(e)
         }
 
-        if (countryCode) {
-            response.data.filters.countryCode = countryCode
-        }
 
-        if (response.data.filters.type || response.data.filters.alive || response.data.filters.countryCode) {
-            response.data.proxies = proxyRepository.findByTypeOrCountryCodeOrAlive(
-                    (Anonymity)response.data.filters.type,
-                    (String)response.data.filters.countryCode,
-                    (boolean)response.data.filters.alive
-            )
-        } else {
-            response.data.proxies = proxyRepository.findAll()
-        }
+        proxyService
+                .rxFindByTypeOrCountryCodeOrAlive(type, countryCode, alive)
+                .subscribe(onNext, onError)
 
-        return response
+        return deffered
     }
+
 
     @RequestMapping(value = "/proxies", method = RequestMethod.POST)
     @ResponseBody
-    ResponseEntity save(
+    DeferredResult<ResponseEntity> save(
             @RequestHeader(required = false) String key,
-            @RequestBody(required = true) ProxyEntity proxy
+            @RequestBody(required = true) ProxyEntity proxyEntity
     ) {
 
-        def response = ResponseEntity.newInstance()
+        DeferredResult<ResponseEntity> deffered = new DeferredResult()
 
-        proxy = proxyRepository.save(proxy)
+        def onError = { e ->
+            deffered.setErrorResult(e)
+        }
 
-        response.data.proxies = [proxy];
-        response.message = 'saved'
+        def onNext = { item ->
+            proxyEntity.countryCode = item.countryCode
+            proxyEntity.region = item.region
+            proxyEntity.city = item.city
+        }
 
-        return response
+        def onCompleted = {
+            proxyService
+                    .rxSave(proxyEntity)
+                    .subscribe(
+                    { savedProxyEntity ->
+                        def response = ResponseEntity.newInstance()
+
+                        response.data.proxies = [savedProxyEntity]
+                        response.message = 'saved'
+
+                        deffered.setResult(response)
+                    }, onError)
+        }
+
+        ExternalApi
+                .fetchGeolocationByIp(proxyEntity.ip)
+                .subscribe(onNext, onError, onCompleted)
+
+        return deffered
     }
+
 }

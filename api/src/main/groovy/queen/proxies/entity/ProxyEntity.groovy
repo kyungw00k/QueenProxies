@@ -1,8 +1,12 @@
 package queen.proxies.entity
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import queen.proxies.constraint.Protocol
+import groovy.json.JsonSlurper
 import queen.proxies.constraint.Anonymity
+import queen.proxies.constraint.Protocol
+import rx.Observable
+import rx.Observer
+import rx.subscriptions.Subscriptions
 
 import javax.persistence.*
 
@@ -23,19 +27,19 @@ class ProxyEntity extends AuditableEntity{
 
     /** Country code */
     @Column(nullable = true)
-    String countryCode
+    String countryCode = 'unknown'
 
     /** Region */
     @Column(nullable = true)
-    String region
+    String region = 'unknown'
 
     /** City */
     @Column(nullable = true)
-    String city
+    String city = 'unknown'
 
     /** Anonymity */
     @Column(nullable = false)
-    Anonymity type
+    Anonymity type = Anonymity.transparent
 
     @ElementCollection(targetClass=Protocol.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
@@ -46,22 +50,4 @@ class ProxyEntity extends AuditableEntity{
     /** True if the proxy was working when last tested */
     @Column(nullable = false)
     boolean alive = false
-//
-//    @Column(updatable = false)
-//    Date createdDate
-//
-//    @Column(insertable = false)
-//    Date lastModifiedDate
-//
-//
-//    @PrePersist
-//    public void prePersist(){
-//        setCreatedDate(new Date());
-//    }
-//
-//    @PreUpdate
-//    public void preUpdate(){
-//        setLastModifiedDate(new Date());
-//    }
-
 }
