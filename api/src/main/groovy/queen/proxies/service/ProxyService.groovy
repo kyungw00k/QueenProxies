@@ -15,6 +15,29 @@ class ProxyService {
     @Autowired
     ProxyRepository proxyRepository
 
+    def Observable<List<ProxyEntity>> rxFindByCountryCode(String countryCode) {
+
+        return Observable.create({ observer ->
+            try {
+                observer.onNext(proxyRepository.findByCountryCode(countryCode));
+                observer.onCompleted();
+            } catch (Exception e) {
+                observer.onError(e);
+            }
+        })
+    }
+    def Observable<List<ProxyEntity>> rxFindByAliveOrderByLastModifiedDate(boolean alive) {
+
+        return Observable.create({ observer ->
+            try {
+                observer.onNext(proxyRepository.findByAliveOrderByLastModifiedDateDesc(alive));
+                observer.onCompleted();
+            } catch (Exception e) {
+                observer.onError(e);
+            }
+        })
+    }
+
     def Observable<List<ProxyEntity>> rxFindByTypeOrCountryCodeOrAlive(Anonymity type, String countryCode, boolean alive) {
 
         return Observable.create({ observer ->
