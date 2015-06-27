@@ -26,11 +26,11 @@ class ProxyService {
             }
         })
     }
-    def Observable<List<ProxyEntity>> rxFindByAliveOrderByLastModifiedDate(boolean alive) {
+    def Observable<List<ProxyEntity>> rxfindByAliveAndLastModifiedDateBeforeOrderByLastModifiedDateDesc(boolean alive, baseDate) {
 
         return Observable.create({ observer ->
             try {
-                observer.onNext(proxyRepository.findByAliveOrderByLastModifiedDateDesc(alive));
+                observer.onNext(proxyRepository.findByAliveAndLastModifiedDateBeforeOrderByLastModifiedDateDesc(alive, baseDate));
                 observer.onCompleted();
             } catch (Exception e) {
                 observer.onError(e);
