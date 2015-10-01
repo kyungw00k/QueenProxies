@@ -5,3 +5,5 @@ target/
 .DS_Store
 
 .idea/
+
+src/main/resources/static/bower_components
