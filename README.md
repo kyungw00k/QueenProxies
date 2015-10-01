@@ -2,7 +2,7 @@
 
 (search `queen` from [`The Naun Project`](https://thenounproject.com/search/?q=queen))
 
-# QueenProxies.com [![Build Status](https://travis-ci.org/kyungw00k/QueenProxies.com.svg?branch=master)](https://travis-ci.org/kyungw00k/QueenProxies.com)
+# QueenProxies.com [![Build Status](https://travis-ci.org/kyungw00k/QueenProxies.svg?branch=master)](https://travis-ci.org/kyungw00k/QueenProxies)
 >The `may not` reliable public proxy servers list<br />
 >But your proxies are eventually tested every 5 minutes.
 
