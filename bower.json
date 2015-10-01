@@ -1,0 +1,30 @@
+{
+  "name": "QueenProxies.com",
+  "version": "0.2.0",
+  "homepage": "https://github.com/kyungw00k/QueenProxies.com",
+  "authors": [
+    "parksama@gmail.com"
+  ],
+  "description": "",
+  "appPath": "src/main/resources/static",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-semantic-ui": "~0.0.3",
+    "angular": "~1.4.7",
+    "angular-resource": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "angular-moment": "~0.10.3"
+  },
+  "devDependencies": {
+    "angular-mocks": "1.4.5",
+    "angular-scenario": "1.4.5"
+  }
+}
