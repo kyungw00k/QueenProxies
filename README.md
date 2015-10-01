@@ -22,6 +22,6 @@ But each proxy is tested every 5 minutes. The proxies are then ranked by how oft
 We are not verify that your real IP address is hidden when using the Anonymous proxies. But if you tend to use proxy to hide the fact, find the Elite High Anonymous proxies and add them manually.
 
 ### Not-so-powerful API.
-We've built a [RESTful API](api/README.md) that is fully documented and easy to use.
+We've built a [RESTful API](resource/README.md) that is fully documented and easy to use.
 
 Results are delivered JSON only.
