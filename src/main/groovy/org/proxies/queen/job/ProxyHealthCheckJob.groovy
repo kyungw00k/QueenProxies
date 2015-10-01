@@ -1,12 +1,12 @@
 package org.proxies.queen.job
 
 import groovy.util.logging.Slf4j
+import org.proxies.queen.entity.ProxyEntity
+import org.proxies.queen.service.ProxyService
+import org.proxies.queen.util.ExternalApi
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
-
-import org.proxies.queen.service.ProxyService
-import org.proxies.queen.util.ExternalApi
 
 /**
  * http://spring.io/guides/gs/scheduling-tasks/
@@ -26,7 +26,7 @@ class ProxyHealthCheckJob {
         [false, true].each { asIs ->
 //            Thread.start({
             proxyService
-                    // FIXME: fix the base date to `yesterday`
+            // FIXME: fix the base date to `yesterday`
                     .rxFindByAliveAndLastModifiedDateBeforeOrderByLastModifiedDateDesc(asIs, new Date())
                     .take(10)
                     .subscribe(
@@ -40,7 +40,9 @@ class ProxyHealthCheckJob {
                                         testUrl,
                                         entity.ip,
                                         entity.port,
-                                        eachProtocol == Protocol.http ? Proxy.Type.HTTP : Proxy.Type.SOCKS
+                                        eachProtocol == ProxyEntity.Protocol.http
+                                                ? Proxy.Type.HTTP
+                                                : Proxy.Type.SOCKS
                                 ).subscribe(
                                         { toBe ->
                                             log.info entity.ip + ':' + entity.port + ' is ' + entity.alive ? 'alive' : 'dead'
