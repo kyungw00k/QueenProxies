@@ -1,13 +1,13 @@
 package org.proxies.queen.controller
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.*
-import org.springframework.web.context.request.async.DeferredResult
-import org.proxies.queen.entity.ProxyEntity
-import org.proxies.queen.entity.ResponseEntity
+import org.proxies.queen.dao.ProxyEntity
+import org.proxies.queen.dto.ResponseData
 import org.proxies.queen.repository.ProxyRepository
 import org.proxies.queen.service.ProxyService
 import org.proxies.queen.util.ExternalApi
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.context.request.async.DeferredResult
 
 @RestController
 class ProxyController {
@@ -18,21 +18,20 @@ class ProxyController {
     @Autowired
     ProxyService proxyService
 
-
     @RequestMapping(value = "/proxies", method = RequestMethod.GET)
     @ResponseBody
-    DeferredResult<ResponseEntity> queries(
+    DeferredResult<ResponseData> queries(
             @RequestParam(required = false) key,
             @RequestParam(required = false) ProxyEntity.Anonymity type,
             @RequestParam(required = false, defaultValue = "true") boolean alive,
             @RequestParam(required = false) countryCode
     ) {
 
-        DeferredResult<ResponseEntity> deferredResult = new DeferredResult()
+        DeferredResult<ResponseData> deferredResult = new DeferredResult()
 
         def onNext = {
 
-            def response = ResponseEntity.newInstance()
+            def response = ResponseData.newInstance()
 
             if (type) {
                 response.data.filters.type = type
@@ -66,12 +65,12 @@ class ProxyController {
 
     @RequestMapping(value = "/proxies", method = RequestMethod.POST)
     @ResponseBody
-    DeferredResult<ResponseEntity> save(
+    DeferredResult<ResponseData> save(
             @RequestHeader(required = false) key,
             @RequestBody(required = true) ProxyEntity proxyEntity
     ) {
 
-        DeferredResult<ResponseEntity> deferredResult = new DeferredResult()
+        DeferredResult<ResponseData> deferredResult = new DeferredResult()
 
         def onError = { e ->
             deferredResult.setErrorResult(e)
@@ -88,7 +87,7 @@ class ProxyController {
                     .rxSave(proxyEntity)
                     .subscribe(
                     { savedProxyEntity ->
-                        def response = ResponseEntity.newInstance()
+                        def response = ResponseData.newInstance()
 
                         response.data.proxies = [savedProxyEntity]
                         response.message = 'saved'

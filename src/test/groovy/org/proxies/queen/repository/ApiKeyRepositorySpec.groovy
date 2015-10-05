@@ -5,7 +5,7 @@ import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration
 import org.proxies.queen.ApplicationTest
-import org.proxies.queen.entity.ApiKeyEntity
+import org.proxies.queen.dao.ApiKeyEntity
 import spock.lang.Specification
 
 /**

@@ -1,14 +1,14 @@
-package org.proxies.queen.entity
+package org.proxies.queen.dto
 
 import com.fasterxml.jackson.annotation.JsonInclude
 
 /**
- * Created by humphrey on 15. 6. 15..
+ * ResponseData Trasfer Object
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-class ResponseEntity {
+class ResponseData {
     /** Requested data */
-    def data = new DataEntity()
+    def data = new MatchData()
 
     /** Unique 36-character string, identifying the request */
     String requestId = UUID.randomUUID().toString()

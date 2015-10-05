@@ -2,7 +2,7 @@ package org.proxies.queen.service
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import org.proxies.queen.entity.ProxyEntity
+import org.proxies.queen.dao.ProxyEntity
 import org.proxies.queen.repository.ProxyRepository
 
 import rx.Observable

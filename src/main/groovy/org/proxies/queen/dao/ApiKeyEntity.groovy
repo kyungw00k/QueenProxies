@@ -1,4 +1,4 @@
-package org.proxies.queen.entity
+package org.proxies.queen.dao
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import org.proxies.queen.listener.ApiKeyEntityListener

@@ -8,4 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class ApiKeyController {
 
+    // create
+    // revoke
+    // delete
 }

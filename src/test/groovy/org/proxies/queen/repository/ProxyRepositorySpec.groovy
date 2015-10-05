@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.IntegrationTest
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration
-import org.proxies.queen.entity.ProxyEntity
+import org.proxies.queen.dao.ProxyEntity
 import org.proxies.queen.ApplicationTest
 
 import spock.lang.Specification
@@ -24,9 +24,9 @@ class ProxyRepositorySpec extends Specification {
         proxyItem.ip = '127.0.0.1'
         proxyItem.port = 8888
         proxyItem.alive = true
-        proxyItem.type = Anonymity.anonymous
+        proxyItem.type = ProxyEntity.Anonymity.anonymous
         proxyItem.countryCode = 'KR'
-        proxyItem.protocols = [Protocol.http]
+        proxyItem.protocols = [ProxyEntity.Protocol.http]
 
         when:
         proxyRepository.save(proxyItem)
@@ -45,10 +45,10 @@ class ProxyRepositorySpec extends Specification {
         found.ip.equals('127.0.0.1')
         found.port.equals(8888)
         found.alive == true
-        found.type == Anonymity.anonymous
+        found.type == ProxyEntity.Anonymity.anonymous
         found.countryCode.equals('KR')
         println found.protocols
-        found.protocols[0] == Protocol.http
+        found.protocols[0] == ProxyEntity.Protocol.http
         found.createdDate
         found.createdDate == found.lastModifiedDate
         found.version == 0

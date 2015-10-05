@@ -9,8 +9,8 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.web.WebAppConfiguration
 import org.proxies.queen.ApplicationTest
 
-import org.proxies.queen.entity.ProxyEntity
-import org.proxies.queen.entity.ResponseEntity
+import org.proxies.queen.dao.ProxyEntity
+import org.proxies.queen.dto.ResponseData
 import org.proxies.queen.repository.ProxyRepository
 import spock.lang.Specification
 
@@ -41,7 +41,7 @@ class ProxyControllerSpec extends Specification {
         proxyItem.protocols = [ProxyEntity.Protocol.http]
 
         when:
-        def response = restTemplate.postForObject("http://localhost:" + port + "/proxies", proxyItem, ResponseEntity.class)
+        def response = restTemplate.postForObject("http://localhost:" + port + "/proxies", proxyItem, ResponseData.class)
 
         then:
         assert response.requestId.length() == '3090cfed-9b33-46f7-9f1c-55317088d397'.length()
@@ -61,7 +61,7 @@ class ProxyControllerSpec extends Specification {
 
     def "GET /proxies"() {
         given:
-        def response = restTemplate.getForObject("http://localhost:" + port + "/proxies", ResponseEntity.class);
+        def response = restTemplate.getForObject("http://localhost:" + port + "/proxies", ResponseData.class);
 
         expect:
         assert response != null

@@ -6,7 +6,7 @@ import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ContextConfiguration
 import org.proxies.queen.ApplicationTest
 
-import org.proxies.queen.entity.ProxyEntity
+import org.proxies.queen.dao.ProxyEntity
 import org.proxies.queen.repository.ProxyRepository
 
 import spock.lang.Specification
@@ -29,8 +29,8 @@ class UpdateProxyEntityTaskSpec extends Specification {
         proxyItem.ip = '185.8.236.17'
         proxyItem.port = 8888
         proxyItem.alive = false
-        proxyItem.type = Anonymity.transparent
-        proxyItem.protocols = [Protocol.http]
+        proxyItem.type = ProxyEntity.Anonymity.transparent
+        proxyItem.protocols = [ProxyEntity.Protocol.http]
         proxyRepository.save(proxyItem)
 
         when:

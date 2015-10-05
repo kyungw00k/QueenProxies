@@ -1,6 +1,6 @@
 package org.proxies.queen.listener
 
-import org.proxies.queen.entity.ApiKeyEntity
+import org.proxies.queen.dao.ApiKeyEntity
 
 import javax.persistence.PrePersist
 import javax.persistence.PreUpdate

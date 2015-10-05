@@ -1,12 +1,12 @@
-package org.proxies.queen.entity
+package org.proxies.queen.dto
 
 import com.fasterxml.jackson.annotation.JsonInclude
 
 /**
- * DataEntity Object
+ * MatchData Trasfer Object
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-class DataEntity {
+class MatchData {
     /** Proxies matching requested filter conditions */
     def proxies = [];
 

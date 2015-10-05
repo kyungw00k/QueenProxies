@@ -1,4 +1,4 @@
-package org.proxies.queen.entity
+package org.proxies.queen.dao
 
 import org.proxies.queen.listener.AuditEntityListener
 
