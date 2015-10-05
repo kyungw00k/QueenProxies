@@ -15,19 +15,10 @@ class PasswordHashSpec extends Specification {
 
         when:
         def encode = PasswordHash.encode(password)
+        println 'Final password is '+ encode
 
         then:
-        encode != PasswordHash.encode('password2')
-    }
-
-    def "Decode"() {
-        given:
-        def password = "v2xtuUEbiWoY4L"
-
-        when:
-        def encode = PasswordHash.encode(password)
-
-        then:
-        password == PasswordHash.decode(encode)
+        encode != PasswordHash.encode(password.reverse())
+        PasswordHash.validate(password, encode) == true
     }
 }
