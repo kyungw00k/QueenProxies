@@ -1,4 +1,4 @@
-package org.proxies.queen.entity
+package org.proxies.queen.dao
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import org.springframework.data.jpa.domain.AbstractPersistable
@@ -22,12 +22,11 @@ class UserEntity extends AbstractPersistable<Long> {
     String email
 
     @Column(nullable = false)
-    String password_hash
+    String passwordHash
 
     @OneToOne
-    ApiKeyEntity apiKey = ApiKeyEntity.newInstance()
+    ApiKeyEntity apiKey = null
 
     @Column(nullable = false)
-    Boolean approvedAccount
-
+    Boolean approvedAccount = false
 }
